@@ -23,6 +23,15 @@ importers:
 
   config/typescript-config: {}
 
+  packages/auth:
+    devDependencies:
+      '@saas-nextjs-rbac/biomejs':
+        specifier: workspace:*
+        version: link:../../config/biome-config
+      '@saas-nextjs-rbac/tsconfig':
+        specifier: workspace:*
+        version: link:../../config/typescript-config
+
 packages:
 
   '@biomejs/biome@1.9.1':
