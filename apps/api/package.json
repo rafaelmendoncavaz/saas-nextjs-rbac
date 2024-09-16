@@ -1,0 +1,16 @@
+{
+  "name": "@saas-nextjs-rbac/api",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "tsx watch src/index.ts"
+  },
+  "dependencies": {
+    "@saas-nextjs-rbac/auth": "workspace:*"
+  },
+  "devDependencies": {
+    "@saas-nextjs-rbac/biomejs": "workspace:*",
+    "@saas-nextjs-rbac/tsconfig": "workspace:*",
+    "@types/node": "^22.5.5",
+    "tsx": "^4.19.1"
+  }
+}

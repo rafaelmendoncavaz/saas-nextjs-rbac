@@ -1,0 +1,6 @@
+{
+  "extends": "@saas-nextjs-rbac/tsconfig/node.json",
+  "include": [
+    "src/**/*"
+  ]
+}
