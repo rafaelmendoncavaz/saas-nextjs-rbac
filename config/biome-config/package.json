@@ -1,0 +1,10 @@
+{
+  "name": "@saas-nextjs-rbac/biomejs",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "biome.json",
+  "private": true,
+  "devDependencies": {
+    "@biomejs/biome": "1.9.1"
+  }
+}
