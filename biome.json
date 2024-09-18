@@ -28,7 +28,8 @@
 	},
 	"files": {
 		"ignore": [
-			"node_modules"
+			"node_modules",
+			"./apps/api/prisma/schema.prisma"
 		]
 	},
 	"overrides": [
