@@ -12,7 +12,7 @@ export async function passwordReset(app: FastifyInstance) {
 		{
 			schema: {
 				tags: ["Auth"],
-				summary: "Get Password Recovery",
+				summary: "Reset your password",
 				body: passwordResetSchema,
 				response: statusPasswordResetSchema,
 			},

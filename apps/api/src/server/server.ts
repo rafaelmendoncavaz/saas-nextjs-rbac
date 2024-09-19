@@ -15,6 +15,7 @@ import { getProfile } from "@/routes/auth/get-profile"
 import { errorHandler } from "@/routes/_errors/error-handler"
 import { getPasswordRecovery } from "@/routes/auth/password-recovery"
 import { passwordReset } from "@/routes/auth/password-reset"
+import { authenticateWithGitHub } from "@/routes/auth/auth-with-github"
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -42,6 +43,7 @@ app.register(fastifyJwt, {
 app.register(fastifyCors)
 app.register(createAccount)
 app.register(authenticateWithPassword)
+app.register(authenticateWithGitHub)
 app.register(getPasswordRecovery)
 app.register(passwordReset)
 app.register(getProfile)

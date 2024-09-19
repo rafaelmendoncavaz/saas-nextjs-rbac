@@ -1,5 +1,6 @@
 import type {
 	authenticateAccountSchema,
+	authenticateWithGithubSchema,
 	createAccountSchema,
 	passwordRecoverySchema,
 	passwordResetSchema,
@@ -10,6 +11,9 @@ import "fastify"
 
 export type TypeCreateAccount = z.infer<typeof createAccountSchema>
 export type TypeAuthenticateAccount = z.infer<typeof authenticateAccountSchema>
+export type TypeAuthenticateWithGithub = z.infer<
+	typeof authenticateWithGithubSchema
+>
 export type TypePasswordRecovery = z.infer<typeof passwordRecoverySchema>
 export type TypePasswordReset = z.infer<typeof passwordResetSchema>
 export type FastifyErrorHandler = FastifyInstance["errorHandler"]
