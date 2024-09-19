@@ -11,6 +11,15 @@ export const authenticateAccountSchema = z.object({
 	password: z.string(),
 })
 
+export const passwordRecoverySchema = z.object({
+	email: z.string().email(),
+})
+
+export const passwordResetSchema = z.object({
+	code: z.string(),
+	password: z.string().min(6),
+})
+
 export const statusGetProfileSchema = {
 	200: z.object({
 		user: z.object({
@@ -26,10 +35,15 @@ export const statusGetProfileSchema = {
 }
 
 export const statusAuthWithPasswordSchema = {
-	401: z.object({
-		message: z.string(),
-	}),
 	201: z.object({
 		token: z.string(),
 	}),
+}
+
+export const statusPasswordRecoverySchema = {
+	201: z.null(),
+}
+
+export const statusPasswordResetSchema = {
+	204: z.null(),
 }

@@ -7,6 +7,7 @@ import { compare } from "bcryptjs"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import { prisma } from "prisma/dbconnect"
+import { BadRequest } from "../_errors/route-errors"
 
 export async function authenticateWithPassword(app: FastifyInstance) {
 	app.withTypeProvider<ZodTypeProvider>().post(
@@ -29,15 +30,11 @@ export async function authenticateWithPassword(app: FastifyInstance) {
 			})
 
 			if (!userFromEmail) {
-				return res.status(401).send({
-					message: "Invalid credentials.",
-				})
+				throw new BadRequest("Invalid Credentials.")
 			}
 
 			if (userFromEmail.passwordHash === null) {
-				return res.status(401).send({
-					message: "User does not have a password. Use social login.",
-				})
+				throw new BadRequest("User does not have a password. Use social login.")
 			}
 
 			const isPasswordValid = await compare(
@@ -46,9 +43,7 @@ export async function authenticateWithPassword(app: FastifyInstance) {
 			)
 
 			if (!isPasswordValid) {
-				return res.status(401).send({
-					message: "Invalid credentials.",
-				})
+				throw new BadRequest("Invalid Credentials.")
 			}
 
 			const token = await res.jwtSign(
