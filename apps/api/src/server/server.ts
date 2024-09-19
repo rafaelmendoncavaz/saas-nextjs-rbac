@@ -16,6 +16,7 @@ import { errorHandler } from "@/routes/_errors/error-handler"
 import { getPasswordRecovery } from "@/routes/auth/password-recovery"
 import { passwordReset } from "@/routes/auth/password-reset"
 import { authenticateWithGitHub } from "@/routes/auth/auth-with-github"
+import { env } from "@saas-nextjs-rbac/env"
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -30,7 +31,15 @@ app.register(fastifySwagger, {
 			description: "Fullstack SaaS application with multi-tenant & RBAC",
 			version: "1.0.0",
 		},
-		servers: [],
+		components: {
+			securitySchemes: {
+				bearerAuth: {
+					type: "http",
+					scheme: "bearer",
+					bearerFormat: "JWT",
+				},
+			},
+		},
 	},
 	transform: jsonSchemaTransform,
 })
@@ -38,7 +47,7 @@ app.register(fastifySwaggerUi, {
 	routePrefix: "/docs",
 })
 app.register(fastifyJwt, {
-	secret: "my-jwt-secret",
+	secret: env.JWT_SECRET,
 })
 app.register(fastifyCors)
 app.register(createAccount)
@@ -48,12 +57,10 @@ app.register(getPasswordRecovery)
 app.register(passwordReset)
 app.register(getProfile)
 
-const port = 3333
-
 app
 	.listen({
-		port: port,
+		port: env.SERVER_PORT,
 	})
 	.then(() => {
-		console.log(`Server is running at http://localhost:${port}`)
+		console.log(`Server is running at http://localhost:${env.SERVER_PORT}`)
 	})

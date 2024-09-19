@@ -1,19 +1,15 @@
 import {
-	authenticateAccountSchema,
 	authenticateWithGithubSchema,
 	gitHubRequestDataSchema,
 	gitHubUserDataSchema,
 	statusAuthWithPasswordSchema,
 } from "@/schema/schema"
-import type {
-	TypeAuthenticateAccount,
-	TypeAuthenticateWithGithub,
-} from "@/types/types"
-import { compare } from "bcryptjs"
+import type { TypeAuthenticateWithGithub } from "@/types/types"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import { prisma } from "prisma/dbconnect"
 import { BadRequest } from "../_errors/route-errors"
+import { env } from "@saas-nextjs-rbac/env"
 
 export async function authenticateWithGitHub(app: FastifyInstance) {
 	app.withTypeProvider<ZodTypeProvider>().post(
@@ -32,14 +28,14 @@ export async function authenticateWithGitHub(app: FastifyInstance) {
 			const gitHubOAuthURL = new URL(
 				"https://github.com/login/oauth/access_token"
 			)
-			gitHubOAuthURL.searchParams.set("client_id", "Ov23liGqNk6dL3BTUykJ")
+			gitHubOAuthURL.searchParams.set("client_id", env.GITHUB_OAUTH_CLIENT_ID)
 			gitHubOAuthURL.searchParams.set(
 				"client_secret",
-				"c6ecfb0531d41ff2e6f5efb1903481482a3f606e"
+				env.GITHUB_OAUTH_CLIENT_SECRET
 			)
 			gitHubOAuthURL.searchParams.set(
 				"redirect_uri",
-				"http://localhost:3333/api/auth/callback"
+				env.GITHUB_OAUTH_CLIENT_REDIRECT_URI
 			)
 			gitHubOAuthURL.searchParams.set("code", code)
 
