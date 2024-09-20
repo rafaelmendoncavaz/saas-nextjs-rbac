@@ -17,12 +17,23 @@ import { getPasswordRecovery } from "@/routes/auth/password-recovery"
 import { passwordReset } from "@/routes/auth/password-reset"
 import { authenticateWithGitHub } from "@/routes/auth/auth-with-github"
 import { env } from "@saas-nextjs-rbac/env"
+import { createOrganization } from "@/routes/org/create-organization"
+import { getMembership } from "@/routes/org/get-membership"
+import { getOrganizations } from "@/routes/org/get-organizations"
+import { getOrganization } from "@/routes/org/get-organization"
+import { updateOrganization } from "@/routes/org/update-organization"
+import { shutdownOrganization } from "@/routes/org/shutdown-organization"
+import { transferOrganization } from "@/routes/org/transfer-organization"
+
+// Fastify Setup
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
 app.setSerializerCompiler(serializerCompiler)
 app.setValidatorCompiler(validatorCompiler)
 app.setErrorHandler(errorHandler)
+
+// FastifySwagger Setup
 
 app.register(fastifySwagger, {
 	openapi: {
@@ -50,12 +61,25 @@ app.register(fastifyJwt, {
 	secret: env.JWT_SECRET,
 })
 app.register(fastifyCors)
+
+// Authentication Routes
 app.register(createAccount)
 app.register(authenticateWithPassword)
 app.register(authenticateWithGitHub)
 app.register(getPasswordRecovery)
 app.register(passwordReset)
 app.register(getProfile)
+
+// Organization Routes
+app.register(createOrganization)
+app.register(getOrganizations)
+app.register(getOrganization)
+app.register(getMembership)
+app.register(updateOrganization)
+app.register(transferOrganization)
+app.register(shutdownOrganization)
+
+// Server Starter
 
 app
 	.listen({
